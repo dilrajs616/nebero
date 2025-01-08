@@ -2,12 +2,11 @@ import requests
 import re
 from selenium import webdriver
 from selenium.webdriver.firefox.service import Service
+from selenium.common.exceptions import TimeoutException
 from bs4 import BeautifulSoup
 from urllib.parse import urlparse, urljoin
 import csv
 import yake
-import time
-import os
 
 def is_downloadable(url):
     try:
@@ -55,14 +54,14 @@ def extract_html(site):
 
     gecko_driver_path = "/usr/local/bin/geckodriver"
     service = Service(executable_path=gecko_driver_path)
-    os.environ["MOZ_HEADLESS"] = "1"
+    # os.environ["MOZ_HEADLESS"] = "1"
 
     driver = webdriver.Firefox(service=service)
 
     try:
+        driver.set_page_load_timeout(30) 
         driver.get(site)
         driver.implicitly_wait(10)
-        time.sleep(2)
         html_content = driver.page_source
         soup = BeautifulSoup(html_content, 'html.parser')
 
@@ -88,6 +87,9 @@ def extract_html(site):
         
         internal_links = extract_internal_links(site, soup)
 
+    except TimeoutException:
+            print(f"Timeout: {site} took too long to load. Skipping...")
+            return None, None
     
     except Exception as e:
         print(f"An error occurred while scraping {site}: {e}")
@@ -115,7 +117,9 @@ def scrape_website(site):
         link_text, _ = extract_html(link)
         all_text.append(link_text)
 
-    paragraph = ' '.join(all_text)
+    # Filter out None values and join only valid string elements
+    paragraph = ' '.join([str(item) for item in all_text if item is not None])
+
     
     return paragraph
 
@@ -133,7 +137,7 @@ with open('keywords.csv', 'w', newline='') as csvfile:
     
     writer.writerow(['Index', 'Website', 'Keywords'])
 
-    for index, site in enumerate(sites, start=1): 
+    for index, site in enumerate(sites, start=61): 
         site = site.strip()
         site_content = scrape_website(site)
         
