@@ -1,3 +1,9 @@
+---
+layout: page
+title: "Page Title"
+---
+
+
 # Project Report
 
 Our goal is to make a model that can categorize websites based on their scraped data. The first problem is that we had non-labelled data. To train our model, we needed a labelled dataset. So we tried clustering websites together based on the keywords that were extracted from their content. But the clusters had too much noise. Our next approach was to use pre-trained models to categorize the text content scraped from websites. We tested two types of models:
