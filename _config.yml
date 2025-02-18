@@ -1,5 +1,12 @@
 theme: minima
 
+# Site settings
+title: Nebero Documentation
+description: A journey through the development of a website categorization ML model.
+baseurl: "/nebero" # the subpath of your site
+url: "https://dilrajs616.github.io" # the base hostname & protocol for your site
+theme: jekyll-theme-cayman
+
 # Navigation links
 navbar:
   - title: "Home"
@@ -10,8 +17,16 @@ navbar:
     url: "/nebero/2025/01/02/data-collection"
   - title: "Scraping"
     url: "/nebero/2025/01/03/scraping"
-  - title: "Problems in web scraping"
+  - title: "Problems in Web Scraping"
     url: "/nebero/2025/01/04/problems"
+  - title: "Scraping Learning"
+    url: "/nebero/2025/01/05/scraping-learning"
+  - title: "Keyword Extraction"
+    url: "/nebero/2025/01/06-keywords"
+  - title: "Clustering Explanation"
+    url: "/nebero/2025/01/07-clustering-explain"
+  - title: "K-Means Clustering"
+    url: "/nebero/2025/01/08-k-means"
   - title: "Hardware Requirements and GPU Decision for AI Models"
     url: "/nebero/2025/02/13/cpuvgpu"
   - title: "Multilingual Data Translation and Model Evaluation"
@@ -20,3 +35,21 @@ navbar:
     url: "/nebero/2025/02/16/rtx-4090"
   - title: "Feb 17"
     url: "/nebero/2025/02/17/feb-17"
+
+# Exclude any files from Jekyll's processing
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - index.html
+
+# Build settings
+markdown: kramdown
+theme: minima
+paginate: 5
+
+# Enable plugins (optional)
+plugins:
+  - jekyll-paginate
+  - jekyll-sitemap
+  - jekyll-feed
