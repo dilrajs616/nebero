@@ -3,7 +3,7 @@ theme: minima
 # Navigation links
 navbar:
   - title: "Home"
-    url: "/"
+    url: "/nebero"
   - title: "Introduction"
     url: "/nebero/2025/01/01/introduction"
   - title: "Data Collection"
