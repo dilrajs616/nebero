@@ -1,9 +1,7 @@
 ---
-layout: page
+layout: default
 title: "Step 0: Data Collection"
 ---
-
-# Step 0: Data Collection for Website Categorization Project
 
 Before starting the scraping process, it was essential to gather a comprehensive list of websites to be categorized. The data collection process involved the following steps:
 

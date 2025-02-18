@@ -1,9 +1,7 @@
 ---
-layout: page
+layout: default
 title: "Introduction"
 ---
-
-# Introduction
 
 ## Problem Statement
 
