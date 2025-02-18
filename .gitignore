@@ -1,0 +1,22 @@
+# Ignore Jekyll's generated site folder
+_site/
+
+# Ignore build-related files and folders
+*.log
+*.tmp
+*.swp
+*.bak
+
+# Ignore Jekyll configuration files
+.jekyll-metadata
+
+# Ignore all backup files (if any)
+*~
+
+# Ignore IDE/editor specific files
+.vscode/
+.idea/
+
+# Ignore system files
+.DS_Store
+Thumbs.db
