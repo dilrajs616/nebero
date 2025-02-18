@@ -1,4 +1,7 @@
-# Report: Multilingual Data Translation and Model Evaluation
+---
+layout: default
+title: "Multilingual Data Translation and Model Evaluation"
+---
 
 ## Introduction
 
