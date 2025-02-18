@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Problems in Web Scraping</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/">My Blog</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            
+              <li class="nav-item">
+                <a class="nav-link" href="/">Home</a>
+              </li>
+            
+              <li class="nav-item">
+                <a class="nav-link" href="/2025/01/01-introduction/">Introduction</a>
+              </li>
+            
+              <li class="nav-item">
+                <a class="nav-link" href="/2025/01/02-data-collection/">Data Collection</a>
+              </li>
+            
+              <li class="nav-item">
+                <a class="nav-link" href="/2025/01/03-scraping/">Scraping</a>
+              </li>
+            
+              <li class="nav-item">
+                <a class="nav-link" href="/2025/01/04-problems/">Problems</a>
+              </li>
+            
+              <li class="nav-item">
+                <a class="nav-link" href="/2025/02/13-feb-13/">Feb 13</a>
+              </li>
+            
+              <li class="nav-item">
+                <a class="nav-link" href="/2025/02/14-feb-14/">Feb 14</a>
+              </li>
+            
+              <li class="nav-item">
+                <a class="nav-link" href="/2025/02/16-feb-16/">Feb 16</a>
+              </li>
+            
+              <li class="nav-item">
+                <a class="nav-link" href="/2025/02/17-feb-17/">Feb 17</a>
+              </li>
+            
+              <li class="nav-item">
+                <a class="nav-link" href="/links.html">Links</a>
+              </li>
+            
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <div class="container mt-4">
+    <!-- This is where your page content will go -->
+    <p>During the web scraping process, several challenges were encountered related to <strong>bandwidth</strong>, <strong>memory usage</strong>, and <strong>CPU utilization</strong>. These issues affected the efficiency and stability of the scraping process when scraping multiple websites in parallel. Below, we detail these problems and the solutions we implemented to overcome them.</p>
+
+<h2 id="1-bandwidth-issues">1. Bandwidth Issues</h2>
+
+<p>When attempting to scrape multiple websites simultaneously using Playwright by opening multiple browser tabs in parallel, we encountered significant bandwidth limitations. As a result, websites often failed to load, resulting in <strong>timeouts</strong>. This was due to the <strong>insufficient available bandwidth</strong> to handle the concurrent requests from multiple tabs.</p>
+
+<h3 id="key-challenges">Key Challenges:</h3>
+<ul>
+  <li><strong>Multiple Concurrent Requests</strong>: Opening several tabs to scrape websites in parallel caused an overload of the available bandwidth.</li>
+  <li><strong>Time-outs</strong>: Because of the bandwidth limitation, many websites would not load within the expected time frame, leading to timeouts.</li>
+</ul>
+
+<h3 id="solution">Solution:</h3>
+<p>To resolve this issue, we needed a more robust infrastructure with higher bandwidth. This led to renting a <strong>server in Singapore</strong> with a <strong>1 GBPS connection</strong>, which provided significantly more bandwidth for handling concurrent requests without timeouts.</p>
+
+<h2 id="2-memory-leaks-in-playwright">2. Memory Leaks in Playwright</h2>
+
+<p>Another significant problem encountered was related to <strong>memory leaks</strong> in Playwright. When the scraper was run for extended periods, the process would gradually consume more memory. Eventually, this would result in the system running out of memory, causing the scraping process to stop.</p>
+
+<h3 id="key-challenges-1">Key Challenges:</h3>
+<ul>
+  <li><strong>Memory Accumulation</strong>: Playwright would use more and more memory as the scraping process continued, without releasing it.</li>
+  <li><strong>Process Termination</strong>: The process would eventually stop when the system reached its memory limit.</li>
+</ul>
+
+<h3 id="solution-1">Solution:</h3>
+<p>To address the memory leak issue, we shifted to a more powerful server with <strong>128 GB of RAM</strong>. This allowed us to run the scraping process for longer periods without hitting memory limitations.</p>
+
+<h2 id="3-cpu-utilization">3. CPU Utilization</h2>
+
+<p>The smaller CPU available in the local setup, with only <strong>4 cores</strong>, was insufficient to handle the high load of scraping multiple websites at once. The CPU would get heavily utilized, leading to <strong>slow performance</strong> and further degradation of the scraping process.</p>
+
+<h3 id="key-challenges-2">Key Challenges:</h3>
+<ul>
+  <li><strong>Limited CPU Power</strong>: With only 4 cores, the CPU struggled to handle multiple scraping tasks simultaneously, resulting in slow speeds.</li>
+  <li><strong>Performance Degradation</strong>: As the number of websites increased, the scraping process became slower and more inefficient.</li>
+</ul>
+
+<h3 id="solution-2">Solution:</h3>
+<p>To overcome this limitation, we rented a server with an <strong>8-core processor</strong>. This significantly boosted the scraping performance, allowing for more parallel tasks and reducing the time required to scrape websites.</p>
+
+<hr />
+
+<h2 id="network-performance-difference-wifiethernet-vs-rented-server">Network Performance Difference: WiFi/Ethernet vs. Rented Server</h2>
+
+<p>Despite having a <strong>1 GBPS connection</strong> from the service provider, we noticed a significant difference in network performance when using <strong>WiFi</strong> or <strong>Ethernet</strong> compared to the <strong>rented server</strong>. On WiFi/Ethernet, the network speed did not fully utilize the 1 GBPS connection, while the rented server was able to achieve the full 1 GBPS speed.</p>
+
+<h3 id="explanation">Explanation:</h3>
+<ul>
+  <li><strong>WiFi vs. Ethernet</strong>: WiFi connections typically have higher latency and more variable speeds, especially if multiple devices are connected or if the signal strength is weak. Ethernet, while more stable than WiFi, can still be impacted by network congestion, suboptimal cables, or hardware limitations.</li>
+  <li><strong>Rented Server</strong>: The rented server, however, had a dedicated and optimized <strong>1 GBPS connection</strong> that was consistent and designed for high-performance tasks like web scraping. This allows for stable and high-speed data transfer without the variability seen in home or office network environments.</li>
+</ul>
+
+<p>Thus, even though both the WiFi/Ethernet connection and the server had a <strong>1 GBPS connection</strong> from the service provider, the server’s infrastructure was far better optimized for consistently achieving that speed.</p>
+
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

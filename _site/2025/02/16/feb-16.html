@@ -1,0 +1,32 @@
+<h1 id="report-setup-of-rtx-4090-and-model-experimentation">Report: Setup of RTX 4090 and Model Experimentation</h1>
+
+<h2 id="introduction">Introduction</h2>
+
+<p>Yesterday, we successfully installed the <strong>RTX 4090 GPU</strong>. In order to support the GPU, we also had to purchase a <strong>new power supply</strong>. For our new setup, we are running <strong>Ubuntu 24.04 LTS</strong>, which comes with <strong>preinstalled CUDA</strong> and <strong>NVIDIA graphics drivers</strong>, streamlining the installation process. The system is configured with <strong>32 GB of RAM</strong> and a <strong>2 TB SSD</strong>, providing ample resources for our model development work.</p>
+
+<h2 id="model-download-and-initial-testing">Model Download and Initial Testing</h2>
+
+<p>Today, we began testing the new setup by downloading the <strong>llama3:8B-instruct-16fp</strong> model, which is <strong>16 GB in size</strong>. With the RTX 4090’s power, the <strong>inference speed</strong> of this model is extremely fast, measured in <strong>milliseconds</strong>. After experimenting with various prompts throughout the day, we found a <strong>prompt</strong> that works particularly well, allowing the model to consistently achieve an accuracy of over <strong>94%</strong>.</p>
+
+<h2 id="experiment-combining-meta-zero-shot-model-and-llama3">Experiment: Combining Meta Zero Shot Model and Llama3</h2>
+
+<p>Toward the end of the day, we conducted an experiment where we attempted to <strong>combine the Meta Zero Shot model</strong> with the <strong>Meta Llama model</strong> for website categorization.</p>
+
+<h3 id="approach">Approach</h3>
+<ol>
+  <li><strong>Meta Zero Shot</strong>: The initial step was to use the Meta Zero Shot model to predict the category of a given website.</li>
+  <li><strong>Meta Llama</strong>: After categorization, we would send both the <strong>website content</strong> and the <strong>predicted category</strong> to <strong>llama3</strong>. The goal was to ask the model whether the predicted category was correct, and if it wasn’t, to provide the correct category.</li>
+</ol>
+
+<h3 id="results">Results</h3>
+<p>Unfortunately, this approach resulted in a <strong>decrease in the accuracy</strong> of the llama3 model. It seems that the <strong>given predicted category</strong> may have influenced the performance of the llama model, causing it to produce less accurate results.</p>
+
+<p>As a result, we decided to <strong>drop this combined approach</strong> and use <strong>llama3 in isolation</strong> for website categorization, where it continues to perform with <strong>high accuracy</strong>.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<ul>
+  <li>The new RTX 4090 setup has significantly improved our workflow, particularly with the <strong>llama3:8B-instruct-16fp model</strong>, achieving fast inference and <strong>94%+ accuracy</strong>.</li>
+  <li>The combination of the <strong>Meta Zero Shot</strong> and <strong>Llama3</strong> models didn’t yield the desired results, so we will proceed with using <strong>llama3 in isolation</strong> moving forward.</li>
+</ul>
+

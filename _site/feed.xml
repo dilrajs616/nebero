@@ -1,0 +1,540 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2025-02-18T12:54:08+05:30</updated><id>http://localhost:4000/feed.xml</id><entry><title type="html">Feb 17</title><link href="http://localhost:4000/2025/02/17/feb-17.html" rel="alternate" type="text/html" title="Feb 17" /><published>2025-02-17T00:00:00+05:30</published><updated>2025-02-17T00:00:00+05:30</updated><id>http://localhost:4000/2025/02/17/feb-17</id><content type="html" xml:base="http://localhost:4000/2025/02/17/feb-17.html"><![CDATA[<h1 id="something">something</h1>]]></content><author><name></name></author><summary type="html"><![CDATA[something]]></summary></entry><entry><title type="html">Feb 16</title><link href="http://localhost:4000/2025/02/16/feb-16.html" rel="alternate" type="text/html" title="Feb 16" /><published>2025-02-16T00:00:00+05:30</published><updated>2025-02-16T00:00:00+05:30</updated><id>http://localhost:4000/2025/02/16/feb-16</id><content type="html" xml:base="http://localhost:4000/2025/02/16/feb-16.html"><![CDATA[<h1 id="report-setup-of-rtx-4090-and-model-experimentation">Report: Setup of RTX 4090 and Model Experimentation</h1>
+
+<h2 id="introduction">Introduction</h2>
+
+<p>Yesterday, we successfully installed the <strong>RTX 4090 GPU</strong>. In order to support the GPU, we also had to purchase a <strong>new power supply</strong>. For our new setup, we are running <strong>Ubuntu 24.04 LTS</strong>, which comes with <strong>preinstalled CUDA</strong> and <strong>NVIDIA graphics drivers</strong>, streamlining the installation process. The system is configured with <strong>32 GB of RAM</strong> and a <strong>2 TB SSD</strong>, providing ample resources for our model development work.</p>
+
+<h2 id="model-download-and-initial-testing">Model Download and Initial Testing</h2>
+
+<p>Today, we began testing the new setup by downloading the <strong>llama3:8B-instruct-16fp</strong> model, which is <strong>16 GB in size</strong>. With the RTX 4090’s power, the <strong>inference speed</strong> of this model is extremely fast, measured in <strong>milliseconds</strong>. After experimenting with various prompts throughout the day, we found a <strong>prompt</strong> that works particularly well, allowing the model to consistently achieve an accuracy of over <strong>94%</strong>.</p>
+
+<h2 id="experiment-combining-meta-zero-shot-model-and-llama3">Experiment: Combining Meta Zero Shot Model and Llama3</h2>
+
+<p>Toward the end of the day, we conducted an experiment where we attempted to <strong>combine the Meta Zero Shot model</strong> with the <strong>Meta Llama model</strong> for website categorization.</p>
+
+<h3 id="approach">Approach</h3>
+<ol>
+  <li><strong>Meta Zero Shot</strong>: The initial step was to use the Meta Zero Shot model to predict the category of a given website.</li>
+  <li><strong>Meta Llama</strong>: After categorization, we would send both the <strong>website content</strong> and the <strong>predicted category</strong> to <strong>llama3</strong>. The goal was to ask the model whether the predicted category was correct, and if it wasn’t, to provide the correct category.</li>
+</ol>
+
+<h3 id="results">Results</h3>
+<p>Unfortunately, this approach resulted in a <strong>decrease in the accuracy</strong> of the llama3 model. It seems that the <strong>given predicted category</strong> may have influenced the performance of the llama model, causing it to produce less accurate results.</p>
+
+<p>As a result, we decided to <strong>drop this combined approach</strong> and use <strong>llama3 in isolation</strong> for website categorization, where it continues to perform with <strong>high accuracy</strong>.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<ul>
+  <li>The new RTX 4090 setup has significantly improved our workflow, particularly with the <strong>llama3:8B-instruct-16fp model</strong>, achieving fast inference and <strong>94%+ accuracy</strong>.</li>
+  <li>The combination of the <strong>Meta Zero Shot</strong> and <strong>Llama3</strong> models didn’t yield the desired results, so we will proceed with using <strong>llama3 in isolation</strong> moving forward.</li>
+</ul>]]></content><author><name></name></author><summary type="html"><![CDATA[Report: Setup of RTX 4090 and Model Experimentation]]></summary></entry><entry><title type="html">Feb 14</title><link href="http://localhost:4000/2025/02/14/feb-14.html" rel="alternate" type="text/html" title="Feb 14" /><published>2025-02-14T00:00:00+05:30</published><updated>2025-02-14T00:00:00+05:30</updated><id>http://localhost:4000/2025/02/14/feb-14</id><content type="html" xml:base="http://localhost:4000/2025/02/14/feb-14.html"><![CDATA[<h1 id="report-multilingual-data-translation-and-model-evaluation">Report: Multilingual Data Translation and Model Evaluation</h1>
+
+<h2 id="introduction">Introduction</h2>
+
+<p>Today, we focused on addressing the issues we were encountering with processing <strong>multi-lingual data</strong>. After evaluating various options, we found and tested the <strong>M2M100 translation model</strong> from Hugging Face. This model offers robust translation capabilities across multiple languages, making it a strong candidate for our project.</p>
+
+<h3 id="what-is-m2m100">What is M2M100?</h3>
+
+<p>The <strong>M2M100 model</strong> is a <strong>many-to-many multilingual translation model</strong> developed by Facebook AI. Unlike traditional translation models, which typically translate between English and other languages (one-to-one or one-to-many), M2M100 supports direct translations between any pair of supported languages without needing English as an intermediary.</p>
+
+<ul>
+  <li><strong>Direct Language Pair Translation</strong>: The model can translate directly between any two languages (e.g., French to German, Hindi to Spanish), which allows for more accurate and context-preserving translations.</li>
+  <li><strong>Model Size</strong>: M2M100 comes in various sizes, with the base version supporting more than 100 languages, making it highly versatile for multilingual projects.</li>
+</ul>
+
+<p>The model has been <strong>fine-tuned by multiple contributors</strong> to enhance its performance, and we shortlisted two specific fine-tuned models today, each having its own pros and cons.</p>
+
+<h2 id="shortlisted-models">Shortlisted Models</h2>
+
+<h3 id="1-helsinki-nlpopus-mt-src_lang-en">1. <strong>Helsinki-NLP/opus-mt-{src_lang}-en</strong></h3>
+
+<ul>
+  <li><strong>Description</strong>: This model requires the replacement of <code class="language-plaintext highlighter-rouge">{src_lang}</code> with the appropriate language code of the input data (e.g., <code class="language-plaintext highlighter-rouge">fr-en</code> for French to English). It downloads a specific model for each language, ensuring that only the required translation model is loaded into memory.</li>
+  <li><strong>Size</strong>: Each language-specific model is <strong>300-400 MB</strong> in size.</li>
+  <li><strong>VRAM Requirements</strong>: For a single website, only one model will be loaded into the GPU at a time, meaning that only <strong>300-400 MB of VRAM</strong> is required. The computational power is minimal, making it an efficient option for handling translations where only one language is processed at a time.</li>
+  <li><strong>Pros</strong>:
+    <ul>
+      <li>Lower VRAM consumption.</li>
+      <li>Scalable when dealing with fewer languages.</li>
+      <li>Optimized for specific language pairs.</li>
+    </ul>
+  </li>
+  <li><strong>Cons</strong>:
+    <ul>
+      <li>A separate model needs to be downloaded for each language pair, increasing management overhead when handling many different languages.</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="2-m2m100-fine-tuned-by-facebook">2. <strong>M2M100 Fine-Tuned by Facebook</strong></h3>
+
+<ul>
+  <li><strong>Description</strong>: This version of the <strong>M2M100 model</strong> was fine-tuned by Facebook and supports translations between <strong>any language pair</strong>. Unlike the Helsinki model, which requires separate models for each language, this model is a <strong>single translation model</strong> that handles all languages at once.</li>
+  <li><strong>Size</strong>: The model is <strong>4.6 GB</strong> in size.</li>
+  <li><strong>VRAM Requirements</strong>: Since it’s a larger model, it requires <strong>4.6 GB of VRAM</strong> to load, which can strain resources if multiple translations are needed at the same time.</li>
+  <li><strong>Pros</strong>:
+    <ul>
+      <li>One model covers all languages, simplifying management.</li>
+      <li>Capable of handling <strong>any-to-any</strong> translation.</li>
+    </ul>
+  </li>
+  <li><strong>Cons</strong>:
+    <ul>
+      <li>High VRAM usage, which may require more powerful GPUs to run efficiently.</li>
+      <li>Higher computational power needed due to its size.</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>We have shortlisted two models to handle our multi-lingual data translation tasks. Both models offer unique advantages depending on the project’s requirements.</p>
+
+<ul>
+  <li><strong>Helsinki-NLP/opus-mt-{src_lang}-en</strong> is ideal for scenarios where only one or a few languages are involved, as it offers lower resource usage and is highly efficient in terms of VRAM consumption.</li>
+  <li><strong>M2M100 fine-tuned by Facebook</strong> is a versatile, all-in-one solution that can handle any-to-any language translations but comes with the trade-off of higher VRAM and computational needs.</li>
+</ul>
+
+<p>Next, we will evaluate these models further to decide which best suits our project’s long-term needs.</p>]]></content><author><name></name></author><summary type="html"><![CDATA[Report: Multilingual Data Translation and Model Evaluation]]></summary></entry><entry><title type="html">Feb 13</title><link href="http://localhost:4000/2025/02/13/feb-13.html" rel="alternate" type="text/html" title="Feb 13" /><published>2025-02-13T00:00:00+05:30</published><updated>2025-02-13T00:00:00+05:30</updated><id>http://localhost:4000/2025/02/13/feb-13</id><content type="html" xml:base="http://localhost:4000/2025/02/13/feb-13.html"><![CDATA[<h1 id="report-hardware-requirements-and-gpu-decision-for-ai-models">Report: Hardware Requirements and GPU Decision for AI Models</h1>
+
+<h2 id="overview">Overview</h2>
+
+<p>In the <strong>AI model hardware requirements report</strong> that was sent to CEO Sir yesterday, I outlined the hardware specifications required for running LLaMA3.1 405B model and DeepSeek V3 AI models efficiently. Following are the <strong>minimum and maximum hardware requirements</strong> based on the model’s complexity and data processing needs.</p>
+
+<ul>
+  <li><strong>Highest Hardware Requirements</strong>:
+    <ul>
+      <li><strong>Graphics Memory</strong>: 800 GB</li>
+      <li><strong>RAM</strong>: 2 TB</li>
+    </ul>
+  </li>
+  <li><strong>Minimum Hardware Requirements</strong>:
+    <ul>
+      <li><strong>Graphics Memory</strong>: 150 GB</li>
+      <li><strong>RAM</strong>: 320 GB</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="decision-on-gpu-nvidia-rtx-4090">Decision on GPU: NVIDIA RTX 4090</h2>
+
+<p>After evaluating the hardware requirements in the report and understanding the specific needs for parallel processing of multiple AI models, we have decided to purchase the <strong>NVIDIA RTX 4090 GPU</strong>. The decision was influenced by several key features of the 4090 that align with the project’s requirements and future scalability.</p>
+
+<h3 id="why-rtx-4090">Why RTX 4090?</h3>
+
+<ol>
+  <li>
+    <p><strong>NVIDIA VLink Compatibility</strong>:<br />
+The <strong>RTX 4090</strong> is compatible with <strong>NVIDIA VLink</strong>, a high-bandwidth interconnect technology that allows the use of <strong>multiple GPUs in parallel</strong>. This feature is crucial for handling large-scale AI models and datasets, as it enables seamless communication between GPUs for faster processing.</p>
+
+    <ul>
+      <li><strong>Parallel GPU Usage</strong>: This feature allows us to connect multiple RTX 4090 GPUs, effectively increasing processing power without the bottleneck of a single GPU. The <strong>parallel processing</strong> of multiple GPUs will significantly improve the speed of training and inference for complex models.</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Higher VRAM Capacity</strong>:<br />
+The <strong>RTX 4090</strong> comes with <strong>24 GB of dedicated graphics memory (VRAM)</strong>, which is substantial compared to other models in its class. This additional VRAM will be essential for running memory-intensive models like:</p>
+    <ul>
+      <li><strong>LLAMA3 8B 16fp</strong></li>
+      <li><strong>Facebook Zero Shot Model</strong></li>
+    </ul>
+
+    <p>These models require significant VRAM to handle large datasets and process complex computations simultaneously. With 24 GB of VRAM, the RTX 4090 can easily accommodate both models, allowing us to run them at the same time without running into memory limitations.</p>
+  </li>
+</ol>
+
+<h2 id="important-concepts-and-definitions">Important Concepts and Definitions</h2>
+
+<h3 id="1-graphics-memory-vram">1. <strong>Graphics Memory (VRAM)</strong>:</h3>
+<ul>
+  <li><strong>VRAM</strong> stands for <strong>Video Random Access Memory</strong>, which is a type of memory used by the GPU to store data that is processed during computation. VRAM is crucial for running AI models as it holds the parameters, weights, and data during training or inference. The more VRAM a GPU has, the larger the models and datasets it can handle.</li>
+  <li>In the context of AI models, <strong>24 GB of VRAM</strong> allows for the simultaneous execution of large models like LLAMA3 and the Facebook Zero Shot model, both of which demand significant memory resources for efficient processing.</li>
+</ul>
+
+<h3 id="2-nvidia-vlink">2. <strong>NVIDIA VLink</strong>:</h3>
+<ul>
+  <li><strong>NVIDIA VLink</strong> is a technology designed to facilitate high-speed communication between multiple GPUs. This allows multiple GPUs to work in parallel, effectively increasing the overall computational power available for tasks such as training deep learning models.</li>
+  <li>VLink enables GPUs to share memory and workloads, improving performance for large-scale AI projects and making it easier to scale up without sacrificing efficiency.</li>
+</ul>
+
+<h3 id="3-llama3-8b-16fp-model">3. <strong>LLAMA3 8B 16fp Model</strong>:</h3>
+<ul>
+  <li><strong>LLAMA3</strong> is a variant of a large language model (LLM) that is optimized for high performance in tasks like text generation and natural language understanding. The <strong>8B</strong> in the model’s name refers to the <strong>8 billion parameters</strong> it uses, which makes it one of the more computationally demanding models.</li>
+  <li>The <strong>16fp</strong> (16-bit floating point precision) is a reduced-precision format that helps speed up calculations without significantly compromising accuracy. This is important for running large models on GPUs with limited memory.</li>
+</ul>
+
+<h3 id="4-facebook-zero-shot-model">4. <strong>Facebook Zero Shot Model</strong>:</h3>
+<ul>
+  <li>The <strong>Facebook Zero Shot Model</strong> is a natural language processing (NLP) model designed to perform a wide range of tasks without requiring task-specific training data. It is capable of generalizing across various domains and tasks, making it highly flexible but also resource-intensive.</li>
+  <li>With <strong>24 GB of VRAM</strong>, the RTX 4090 can run this model alongside LLAMA3, allowing for parallel execution of multiple AI tasks.</li>
+</ul>
+
+<h2 id="overview-1">Overview</h2>
+
+<p>We also focused on testing the performance of the <strong>Facebook Zero Shot model</strong> (1.7 GB in size), specifically comparing its processing time on a CPU versus a GPU. The purpose of this test was to understand the time efficiency of using a GPU for handling website data and determine if upgrading our hardware setup would be beneficial for future projects.</p>
+
+<h2 id="performance-testing-results">Performance Testing Results</h2>
+
+<h3 id="cpu-performance"><strong>CPU Performance</strong></h3>
+<ul>
+  <li>On the CPU, the processing time per website was significantly higher. We observed that it took <strong>around 30 seconds per website</strong> to run the model. While this is manageable for smaller workloads, it would be inefficient for large-scale processing, especially with multiple websites being scraped in parallel.</li>
+</ul>
+
+<h3 id="gpu-performance"><strong>GPU Performance</strong></h3>
+<ul>
+  <li>After testing the model on a GPU, we saw a dramatic improvement in processing speed. The model processed each website in <strong>just 4 seconds</strong>, which is an 85% reduction in processing time compared to the CPU.</li>
+  <li>This significant performance boost clearly highlights the advantages of using a GPU for our tasks, especially when dealing with large volumes of data.</li>
+</ul>
+
+<h2 id="gpu-upgrade-plan">GPU Upgrade Plan</h2>
+
+<p>Based on the test results and the clear need for better processing speed, we have decided to upgrade our system with a <strong>high-performance GPU</strong>. Today, we finalized our decision and <strong>ordered an RTX 4090 GPU</strong> to be installed in the system. This will enable us to handle larger datasets more efficiently and speed up the overall processing time.</p>
+
+<h3 id="expected-benefits">Expected Benefits:</h3>
+<ul>
+  <li><strong>Faster Processing Times</strong>: With the RTX 4090, we expect to further reduce the time per website, allowing us to handle more websites simultaneously.</li>
+  <li><strong>Increased Efficiency</strong>: With the enhanced performance, we will be able to scale up our model’s usage and process large amounts of data much more quickly.</li>
+  <li><strong>Future-Proofing</strong>: The RTX 4090 will also help future-proof our setup for any additional models or workloads that require high-performance GPU usage.</li>
+</ul>
+
+<h2 id="next-steps">Next Steps</h2>
+<ul>
+  <li><strong>Hardware Installation</strong>: Once the RTX 4090 GPU arrives, we will install it in the system and configure it for optimal performance.</li>
+  <li><strong>Further Testing</strong>: After the GPU is set up, we will continue testing to ensure that the model performs as expected in real-world scenarios.</li>
+  <li><strong>Scaling Up</strong>: With the enhanced speed, we will begin scaling up the project to process more websites and refine the categorization process for the company.</li>
+</ul>
+
+<h2 id="conclusion">Conclusion</h2>
+<p>Today’s performance tests clearly demonstrated the power of using a GPU for this project. The move to an <strong>RTX 4090</strong> will not only drastically improve processing times but also pave the way for smoother scaling of the system. We are excited to move forward with this upgrade and look forward to the enhanced capabilities it will bring.</p>]]></content><author><name></name></author><summary type="html"><![CDATA[Report: Hardware Requirements and GPU Decision for AI Models]]></summary></entry><entry><title type="html">Problems in Web Scraping</title><link href="http://localhost:4000/2025/01/04/problems.html" rel="alternate" type="text/html" title="Problems in Web Scraping" /><published>2025-01-04T00:00:00+05:30</published><updated>2025-01-04T00:00:00+05:30</updated><id>http://localhost:4000/2025/01/04/problems</id><content type="html" xml:base="http://localhost:4000/2025/01/04/problems.html"><![CDATA[<p>During the web scraping process, several challenges were encountered related to <strong>bandwidth</strong>, <strong>memory usage</strong>, and <strong>CPU utilization</strong>. These issues affected the efficiency and stability of the scraping process when scraping multiple websites in parallel. Below, we detail these problems and the solutions we implemented to overcome them.</p>
+
+<h2 id="1-bandwidth-issues">1. Bandwidth Issues</h2>
+
+<p>When attempting to scrape multiple websites simultaneously using Playwright by opening multiple browser tabs in parallel, we encountered significant bandwidth limitations. As a result, websites often failed to load, resulting in <strong>timeouts</strong>. This was due to the <strong>insufficient available bandwidth</strong> to handle the concurrent requests from multiple tabs.</p>
+
+<h3 id="key-challenges">Key Challenges:</h3>
+<ul>
+  <li><strong>Multiple Concurrent Requests</strong>: Opening several tabs to scrape websites in parallel caused an overload of the available bandwidth.</li>
+  <li><strong>Time-outs</strong>: Because of the bandwidth limitation, many websites would not load within the expected time frame, leading to timeouts.</li>
+</ul>
+
+<h3 id="solution">Solution:</h3>
+<p>To resolve this issue, we needed a more robust infrastructure with higher bandwidth. This led to renting a <strong>server in Singapore</strong> with a <strong>1 GBPS connection</strong>, which provided significantly more bandwidth for handling concurrent requests without timeouts.</p>
+
+<h2 id="2-memory-leaks-in-playwright">2. Memory Leaks in Playwright</h2>
+
+<p>Another significant problem encountered was related to <strong>memory leaks</strong> in Playwright. When the scraper was run for extended periods, the process would gradually consume more memory. Eventually, this would result in the system running out of memory, causing the scraping process to stop.</p>
+
+<h3 id="key-challenges-1">Key Challenges:</h3>
+<ul>
+  <li><strong>Memory Accumulation</strong>: Playwright would use more and more memory as the scraping process continued, without releasing it.</li>
+  <li><strong>Process Termination</strong>: The process would eventually stop when the system reached its memory limit.</li>
+</ul>
+
+<h3 id="solution-1">Solution:</h3>
+<p>To address the memory leak issue, we shifted to a more powerful server with <strong>128 GB of RAM</strong>. This allowed us to run the scraping process for longer periods without hitting memory limitations.</p>
+
+<h2 id="3-cpu-utilization">3. CPU Utilization</h2>
+
+<p>The smaller CPU available in the local setup, with only <strong>4 cores</strong>, was insufficient to handle the high load of scraping multiple websites at once. The CPU would get heavily utilized, leading to <strong>slow performance</strong> and further degradation of the scraping process.</p>
+
+<h3 id="key-challenges-2">Key Challenges:</h3>
+<ul>
+  <li><strong>Limited CPU Power</strong>: With only 4 cores, the CPU struggled to handle multiple scraping tasks simultaneously, resulting in slow speeds.</li>
+  <li><strong>Performance Degradation</strong>: As the number of websites increased, the scraping process became slower and more inefficient.</li>
+</ul>
+
+<h3 id="solution-2">Solution:</h3>
+<p>To overcome this limitation, we rented a server with an <strong>8-core processor</strong>. This significantly boosted the scraping performance, allowing for more parallel tasks and reducing the time required to scrape websites.</p>
+
+<hr />
+
+<h2 id="network-performance-difference-wifiethernet-vs-rented-server">Network Performance Difference: WiFi/Ethernet vs. Rented Server</h2>
+
+<p>Despite having a <strong>1 GBPS connection</strong> from the service provider, we noticed a significant difference in network performance when using <strong>WiFi</strong> or <strong>Ethernet</strong> compared to the <strong>rented server</strong>. On WiFi/Ethernet, the network speed did not fully utilize the 1 GBPS connection, while the rented server was able to achieve the full 1 GBPS speed.</p>
+
+<h3 id="explanation">Explanation:</h3>
+<ul>
+  <li><strong>WiFi vs. Ethernet</strong>: WiFi connections typically have higher latency and more variable speeds, especially if multiple devices are connected or if the signal strength is weak. Ethernet, while more stable than WiFi, can still be impacted by network congestion, suboptimal cables, or hardware limitations.</li>
+  <li><strong>Rented Server</strong>: The rented server, however, had a dedicated and optimized <strong>1 GBPS connection</strong> that was consistent and designed for high-performance tasks like web scraping. This allows for stable and high-speed data transfer without the variability seen in home or office network environments.</li>
+</ul>
+
+<p>Thus, even though both the WiFi/Ethernet connection and the server had a <strong>1 GBPS connection</strong> from the service provider, the server’s infrastructure was far better optimized for consistently achieving that speed.</p>]]></content><author><name></name></author><summary type="html"><![CDATA[During the web scraping process, several challenges were encountered related to bandwidth, memory usage, and CPU utilization. These issues affected the efficiency and stability of the scraping process when scraping multiple websites in parallel. Below, we detail these problems and the solutions we implemented to overcome them.]]></summary></entry><entry><title type="html">Step 1: Web Scraping</title><link href="http://localhost:4000/2025/01/03/scraping.html" rel="alternate" type="text/html" title="Step 1: Web Scraping" /><published>2025-01-03T00:00:00+05:30</published><updated>2025-01-03T00:00:00+05:30</updated><id>http://localhost:4000/2025/01/03/scraping</id><content type="html" xml:base="http://localhost:4000/2025/01/03/scraping.html"><![CDATA[<p>As the first task of our project we had to scrape all the 
+In our web scraping project, we tried multiple libraries and tools to extract content from websites. Below is a detailed explanation of each approach we explored, including how they work, their pros, and cons.</p>
+
+<h2 id="1-requests-library">1. Requests Library</h2>
+
+<h3 id="how-it-works">How It Works:</h3>
+<p>The <code class="language-plaintext highlighter-rouge">requests</code> library is a simple and powerful Python tool for sending HTTP requests. It allows you to make GET, POST, and other types of HTTP requests to a website and retrieve the HTML content of the page.</p>
+
+<h3 id="code-example">Code Example:</h3>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">requests</span>
+
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="sh">"</span><span class="s">https://example.com</span><span class="sh">"</span><span class="p">)</span>
+<span class="n">html_content</span> <span class="o">=</span> <span class="n">response</span><span class="p">.</span><span class="n">text</span>
+</code></pre></div></div>
+
+<h3 id="pros">Pros:</h3>
+<ul>
+  <li>Very simple to use and understand.</li>
+  <li>Fast for scraping static content.</li>
+  <li>Lightweight and doesn’t use a lot of system resources.</li>
+</ul>
+
+<h3 id="cons">Cons:</h3>
+<ul>
+  <li>Cannot handle JavaScript rendering. Some websites use JavaScript to load content dynamically, and <code class="language-plaintext highlighter-rouge">requests</code> can’t scrape such sites because it only fetches the initial HTML.</li>
+</ul>
+
+<h2 id="2-pyppeteer">2. Pyppeteer</h2>
+
+<h3 id="how-it-works-1">How It Works:</h3>
+<p><code class="language-plaintext highlighter-rouge">pyppeteer</code> is a Python port of the <code class="language-plaintext highlighter-rouge">puppeteer</code> library (a Node.js tool) used for web scraping and automation. It works by launching a headless (non-UI) browser and simulating human-like interactions with the website, such as clicking buttons and waiting for JavaScript to load the content.</p>
+
+<h3 id="code-example-1">Code Example:</h3>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">pyppeteer</span> <span class="kn">import</span> <span class="n">launch</span>
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">fetch_content</span><span class="p">():</span>
+    <span class="n">browser</span> <span class="o">=</span> <span class="k">await</span> <span class="nf">launch</span><span class="p">(</span><span class="n">headless</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">page</span> <span class="o">=</span> <span class="k">await</span> <span class="n">browser</span><span class="p">.</span><span class="nf">newPage</span><span class="p">()</span>
+    <span class="k">await</span> <span class="n">page</span><span class="p">.</span><span class="nf">goto</span><span class="p">(</span><span class="sh">"</span><span class="s">https://example.com</span><span class="sh">"</span><span class="p">)</span>
+    <span class="n">content</span> <span class="o">=</span> <span class="k">await</span> <span class="n">page</span><span class="p">.</span><span class="nf">content</span><span class="p">()</span>
+    <span class="k">await</span> <span class="n">browser</span><span class="p">.</span><span class="nf">close</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">content</span>
+</code></pre></div></div>
+
+<h3 id="pros-1">Pros:</h3>
+<ul>
+  <li>Can scrape dynamic websites that use JavaScript to load content.</li>
+  <li>Simulates real user interactions, so it’s effective for complex websites.</li>
+</ul>
+
+<h3 id="cons-1">Cons:</h3>
+<ul>
+  <li>Slower than <code class="language-plaintext highlighter-rouge">requests</code> since it requires launching a full browser.</li>
+  <li>Not as reliable as other tools for scraping certain types of websites, particularly websites with heavy anti-scraping mechanisms.</li>
+</ul>
+
+<h2 id="3-selenium">3. Selenium</h2>
+
+<h3 id="how-it-works-2">How It Works:</h3>
+<p><code class="language-plaintext highlighter-rouge">selenium</code> is another popular tool for automating web browsers. It allows you to control a browser (such as Chrome or Firefox) to interact with websites, just like a real user would. Selenium can handle dynamic content by running JavaScript and simulating clicks or keyboard inputs.</p>
+
+<h3 id="code-example-2">Code Example:</h3>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">selenium</span> <span class="kn">import</span> <span class="n">webdriver</span>
+
+<span class="n">driver</span> <span class="o">=</span> <span class="n">webdriver</span><span class="p">.</span><span class="nc">Chrome</span><span class="p">(</span><span class="n">executable_path</span><span class="o">=</span><span class="sh">'</span><span class="s">/path/to/chromedriver</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">driver</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="sh">"</span><span class="s">https://example.com</span><span class="sh">"</span><span class="p">)</span>
+<span class="n">content</span> <span class="o">=</span> <span class="n">driver</span><span class="p">.</span><span class="n">page_source</span>
+<span class="n">driver</span><span class="p">.</span><span class="nf">quit</span><span class="p">()</span>
+</code></pre></div></div>
+
+<h3 id="pros-2">Pros:</h3>
+<ul>
+  <li>Can handle JavaScript-heavy websites and dynamic content.</li>
+  <li>Works well for websites that require interactions like clicks or form submissions.</li>
+</ul>
+
+<h3 id="cons-2">Cons:</h3>
+<ul>
+  <li>Slower than <code class="language-plaintext highlighter-rouge">requests</code> and <code class="language-plaintext highlighter-rouge">pyppeteer</code> due to the overhead of controlling a real browser.</li>
+  <li>Consumes a lot of memory and resources.</li>
+  <li>As the number of websites increases, scraping becomes slower and less efficient.</li>
+</ul>
+
+<h2 id="4-playwright">4. Playwright</h2>
+
+<h3 id="how-it-works-3">How It Works:</h3>
+<p><code class="language-plaintext highlighter-rouge">Playwright</code> is a modern alternative to <code class="language-plaintext highlighter-rouge">Selenium</code> and <code class="language-plaintext highlighter-rouge">pyppeteer</code>. Like those tools, it allows you to automate browsers and scrape dynamic content, but it’s more efficient and faster. Playwright supports multiple browsers (Chromium, Firefox, and WebKit) and provides more control over interactions like clicking, scrolling, and waiting for elements to appear.</p>
+
+<h3 id="code-example-3">Code Example:</h3>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">playwright.sync_api</span> <span class="kn">import</span> <span class="n">sync_playwright</span>
+
+<span class="k">with</span> <span class="nf">sync_playwright</span><span class="p">()</span> <span class="k">as</span> <span class="n">p</span><span class="p">:</span>
+    <span class="n">browser</span> <span class="o">=</span> <span class="n">p</span><span class="p">.</span><span class="n">chromium</span><span class="p">.</span><span class="nf">launch</span><span class="p">()</span>
+    <span class="n">page</span> <span class="o">=</span> <span class="n">browser</span><span class="p">.</span><span class="nf">new_page</span><span class="p">()</span>
+    <span class="n">page</span><span class="p">.</span><span class="nf">goto</span><span class="p">(</span><span class="sh">"</span><span class="s">https://example.com</span><span class="sh">"</span><span class="p">)</span>
+    <span class="n">content</span> <span class="o">=</span> <span class="n">page</span><span class="p">.</span><span class="nf">content</span><span class="p">()</span>
+    <span class="n">browser</span><span class="p">.</span><span class="nf">close</span><span class="p">()</span>
+</code></pre></div></div>
+
+<h3 id="pros-3">Pros:</h3>
+<ul>
+  <li>Faster and more efficient than Selenium and pyppeteer.</li>
+  <li>Handles JavaScript-heavy websites with ease.</li>
+  <li>Allows for scraping across multiple browsers (Chromium, Firefox, WebKit).</li>
+  <li>Better performance with less memory usage.</li>
+  <li>Designed for parallelism.</li>
+</ul>
+
+<h3 id="cons-3">Cons:</h3>
+<ul>
+  <li>Still has challenges with bypassing advanced anti-bot mechanisms like Cloudflare.</li>
+  <li>It is very new compared to rest of the libraries. It was released in 2020. So it has a lot of issues. The biggest issue is of memory leakage. It takes very less memory. But over a long period of time, it keeps acquiring more and more memory and eventually it will cause the device crash due to no more memory error.</li>
+</ul>
+
+<h2 id="challenges-cloudflare-and-anti-bot-layers">Challenges: Cloudflare and Anti-bot Layers</h2>
+
+<p>While Playwright works well for most sites, we are still facing challenges with websites protected by Cloudflare or other anti-bot measures. These systems often detect scraping attempts and block or limit access, making it difficult to scrape data without encountering errors or CAPTCHA challenges.</p>
+
+<h3 id="solutions-we-are-considering">Solutions We Are Considering:</h3>
+<ul>
+  <li>Using IP rotation or proxies to avoid detection.</li>
+  <li>Solving CAPTCHA with services like 2Captcha.</li>
+  <li>Trying additional techniques like headless browser fingerprinting and setting custom user agents.</li>
+</ul>]]></content><author><name></name></author><summary type="html"><![CDATA[As the first task of our project we had to scrape all the In our web scraping project, we tried multiple libraries and tools to extract content from websites. Below is a detailed explanation of each approach we explored, including how they work, their pros, and cons.]]></summary></entry><entry><title type="html">Step 0: Data Collection</title><link href="http://localhost:4000/2025/01/02/data-collection.html" rel="alternate" type="text/html" title="Step 0: Data Collection" /><published>2025-01-02T00:00:00+05:30</published><updated>2025-01-02T00:00:00+05:30</updated><id>http://localhost:4000/2025/01/02/data-collection</id><content type="html" xml:base="http://localhost:4000/2025/01/02/data-collection.html"><![CDATA[<p>Before starting the scraping process, it was essential to gather a comprehensive list of websites to be categorized. The data collection process involved the following steps:</p>
+
+<h2 id="1-extracting-url-logs-from-internal-sources">1. Extracting URL Logs from Internal Sources</h2>
+
+<p>As the firewall was already implemented in multiple colleges and companies, we were able to access URL logs from two colleges: <strong>GNDEC Ludhiana</strong> and <strong>Thapar University</strong>. These logs contained URLs visited by users over the last 3 years. The objective was to extract domain names from these logs for further processing.</p>
+
+<h3 id="key-steps">Key Steps:</h3>
+<ul>
+  <li><strong>Log Extraction</strong>: We obtained the URL logs from the colleges’ firewall or network monitoring system. These logs contained data about every website visited by users.</li>
+  <li><strong>Data Range</strong>: The data provided logs of URLs accessed over the last 3 years, which gave us a historical snapshot of website traffic.</li>
+</ul>
+
+<h2 id="2-extracting-domain-names">2. Extracting Domain Names</h2>
+
+<p>After extracting the logs, the next task was to extract only the domain names from the URLs. This was crucial, as the logs also contained full URLs, but we only needed the domain portion for further processing.</p>
+
+<h3 id="key-steps-1">Key Steps:</h3>
+<ul>
+  <li><strong>Parsing URLs</strong>: Using Python’s <code class="language-plaintext highlighter-rouge">urlparse</code> module or similar tools, we parsed the URLs to extract the domain names.</li>
+  <li><strong>Handling Subdomains</strong>: We removed subdomains from the extracted domain names to ensure we were only left with the primary domain. For example, “sub.example.com” would be reduced to “example.com”.</li>
+</ul>
+
+<h2 id="3-filtering-and-cleaning-the-data">3. Filtering and Cleaning the Data</h2>
+
+<p>Once we had the domain names, we performed a series of cleaning steps to ensure that only relevant domains were included.</p>
+
+<h3 id="key-steps-2">Key Steps:</h3>
+<ul>
+  <li><strong>Removing Useless Domains</strong>: We filtered out domains that were irrelevant to the categorization task, such as domains for hosting services (e.g., “example-hosting.com”) and CDN websites (e.g., “cdn.example.com”).</li>
+  <li><strong>Duplicate Removal</strong>: We removed any duplicate domains to avoid having redundant entries in our final list.</li>
+  <li><strong>Final Cleaned Dataset</strong>: After cleaning, we were left with a list of several hundred thousand unique domain names.</li>
+</ul>
+
+<h2 id="4-dealing-with-expired-domains">4. Dealing with Expired Domains</h2>
+
+<p>One of the challenges we encountered was that many of the domain names in the extracted list were no longer reachable, as they had expired. These expired domains could not be scraped, so we had to take steps to gather active domains for our project.</p>
+
+<h3 id="key-steps-3">Key Steps:</h3>
+<ul>
+  <li><strong>Domain Availability Check</strong>: We implemented a script to check the availability of domains in the list. This helped identify and remove expired or unreachable domains.</li>
+  <li><strong>Filtering Unreachable Domains</strong>: Domains that were no longer available or had expired were removed from the list, leaving only the active ones.</li>
+</ul>
+
+<h2 id="5-downloading-the-top-10-million-domains">5. Downloading the Top 10 Million Domains</h2>
+
+<p>To complement the internal data from the URL logs, we downloaded a list of the top 10 million domains to increase the breadth of our dataset. This list was sourced from <a href="https://www.domcop.com/top-10-million-websites">Domcop’s Top 10 Million Websites</a>.</p>
+
+<h3 id="key-steps-4">Key Steps:</h3>
+<ul>
+  <li><strong>Downloading from Domcop</strong>: We obtained a ready-made list of the top 10 million domains. This list contained domains that are among the most popular and widely visited on the web, making it a valuable source for website categorization.</li>
+</ul>
+
+<h2 id="6-challenges-with-alternative-data-sources">6. Challenges with Alternative Data Sources</h2>
+
+<p>While exploring additional sources, we also attempted to download domain lists from Kaggle and GitHub. However, these sources presented some challenges.</p>
+
+<h3 id="key-issues">Key Issues:</h3>
+<ul>
+  <li><strong>Missing Protocol</strong>: The lists from Kaggle and GitHub only contained domain names (e.g., “example.com”) without the “http” or “https” prefix. For web scraping, it is essential to have the full URLs, including the protocol (i.e., “https://example.com”). Without this information, the domains were not directly usable for scraping.</li>
+  <li><strong>Data Inconsistencies</strong>: Some of the domain lists from Kaggle and GitHub lacked necessary details or had inconsistent formatting, which made them less practical compared to the Domcop list.</li>
+</ul>
+
+<h2 id="7-final-domain-list">7. Final Domain List</h2>
+
+<p>After performing the data collection and cleaning steps, we were left with a refined list of domains, including the top 10 million domains from Domcop and the active domains from the internal URL logs. This list served as the foundation for the next stages of our website categorization project.</p>
+
+<h3 id="key-steps-5">Key Steps:</h3>
+<ul>
+  <li><strong>Combining Sources</strong>: We combined the internal domain list with the top 10 million domains from Domcop to create a comprehensive list.</li>
+  <li><strong>Pre-processing</strong>: We ensured that each domain in the final list had the proper format (including “http” or “https”) to ensure smooth scraping and data collection.</li>
+</ul>]]></content><author><name></name></author><summary type="html"><![CDATA[Before starting the scraping process, it was essential to gather a comprehensive list of websites to be categorized. The data collection process involved the following steps:]]></summary></entry><entry><title type="html">Introduction</title><link href="http://localhost:4000/2025/01/01/introduction.html" rel="alternate" type="text/html" title="Introduction" /><published>2025-01-01T00:00:00+05:30</published><updated>2025-01-01T00:00:00+05:30</updated><id>http://localhost:4000/2025/01/01/introduction</id><content type="html" xml:base="http://localhost:4000/2025/01/01/introduction.html"><![CDATA[<h2 id="problem-statement">Problem Statement</h2>
+
+<p>With the ever-increasing number of websites online, it has become important to organize and categorize websites based on their content. This categorization helps in enhancing security systems as well.</p>
+
+<p>The problem statement for this project is that we are intending to implement a website blocking feature in our firewall. To block websites effectively, the firewall must first be able to identify the category of each website. Automated categorization will be essential, as it will allow for quick and reliable classification of websites based on their content, ensuring that harmful or unwanted websites can be blocked proactively. The final goal will be to build a model capable of predicting the category of any new website that it encounters.</p>
+
+<h2 id="project-overview">Project Overview</h2>
+
+<p>In this project, we are aiming to create an automated pipeline that can scrape websites, extract keywords, and categorize them based on their content. Since we do not have any labeled dataset for training the model, we plan to produce a labeled dataset by clustering websites with similar content together and manually labeling these clusters with meaningful category names. The final goal will be to build a model capable of predicting the category of any new website that it encounters.</p>
+
+<p>Our approach will consist of three main tasks:</p>
+
+<ol>
+  <li>
+    <p><strong>Scraping Website Content</strong>: Automatically visiting a website, retrieving its content, and cleaning it by removing irrelevant parts (e.g., ads, scripts).</p>
+  </li>
+  <li>
+    <p><strong>Keyword Extraction</strong>: Extracting relevant keywords from the scraped content using techniques like Term Frequency-Inverse Document Frequency (TF-IDF).</p>
+  </li>
+  <li>
+    <p><strong>Website Clustering</strong>: Grouping websites with similar keywords using clustering algorithms like K-Means, and then manually labeling the clusters to create a labeled dataset.</p>
+  </li>
+</ol>
+
+<p>This labeled dataset will later be used to train a model capable of categorizing new websites.</p>
+
+<h2 id="approach">Approach</h2>
+
+<h3 id="1-scraping-website-content">1. Scraping Website Content</h3>
+
+<p>To begin with, we will develop an automated web scraping script using Playwright to navigate websites, extract content, and clean the data. The process will be designed to extract only the main textual content by ignoring irrelevant parts of the HTML, such as JavaScript, CSS, and ads.</p>
+
+<h4 id="key-steps-in-scraping">Key Steps in Scraping:</h4>
+
+<ul>
+  <li><strong>Browser Automation</strong>: We will use Playwright to programmatically navigate to websites. A timeout will be implemented to handle slow-loading pages, and we will also capture redirected URLs.</li>
+  <li><strong>Content Extraction</strong>: We will use BeautifulSoup to parse the HTML content and remove unwanted elements such as ads, banners, and scripts to focus on the main body content.</li>
+  <li><strong>Error Handling</strong>: Errors such as timeouts and page load issues will be logged for later analysis, and any failures will be handled gracefully without crashing the entire scraping pipeline.</li>
+  <li><strong>Language Detection</strong>: After extracting content, we will implement a language detection step to identify the language of the text, ensuring that the websites are in the expected language before moving to the next stage.</li>
+</ul>
+
+<h3 id="2-keyword-extraction">2. Keyword Extraction</h3>
+
+<p>Once the content is scraped, we will move on to extracting relevant keywords from the textual data. This will be crucial, as keywords will serve as the main features for categorizing websites.</p>
+
+<h4 id="approach-to-keyword-extraction">Approach to Keyword Extraction:</h4>
+
+<ul>
+  <li><strong>Content Cleaning</strong>: The text will be cleaned by removing non-alphabetic characters, punctuation, and extra spaces. This will allow us to focus only on meaningful words in the content.</li>
+  <li><strong>TF-IDF Vectorizer</strong>: We will use the Term Frequency-Inverse Document Frequency (TF-IDF) technique to extract important keywords from the content. The TF-IDF vectorizer will assign higher weights to words that are more important within the context of the text, and we will cap the number of features at 1,000 to limit the dimensionality.</li>
+  <li><strong>Keyword Ranking</strong>: After vectorizing the content, we will rank keywords by their TF-IDF scores and select the top-ranked keywords to represent each website.</li>
+</ul>
+
+<h3 id="3-clustering-websites">3. Clustering Websites</h3>
+
+<p>The next step will be to group websites into categories based on their extracted keywords. We will use K-Means clustering for this purpose.</p>
+
+<h4 id="clustering-process">Clustering Process:</h4>
+
+<ul>
+  <li><strong>TF-IDF Matrix</strong>: The TF-IDF vectors for all websites will be assembled into a matrix, which will serve as the input for the clustering algorithm.</li>
+  <li><strong>K-Means Clustering</strong>: We will use the K-Means algorithm to group websites with similar keyword distributions into clusters. The number of clusters (<code class="language-plaintext highlighter-rouge">k</code>) will be chosen experimentally, and we will aim to arrive at a value of <code class="language-plaintext highlighter-rouge">k=90</code> based on our dataset.</li>
+  <li><strong>Cluster Labeling</strong>: After running the K-Means algorithm, we will manually inspect the websites in each cluster and assign meaningful category names to the clusters. This step will be crucial for creating a labeled dataset.</li>
+</ul>
+
+<h4 id="evaluating-clusters">Evaluating Clusters:</h4>
+
+<ul>
+  <li><strong>Silhouette Score</strong>: To evaluate the quality of the clustering, we will calculate the silhouette score, which measures how well-separated the clusters are. A higher score will indicate that the clusters are more distinct.</li>
+  <li><strong>PCA Visualization</strong>: We will use Principal Component Analysis (PCA) to reduce the dimensionality of the keyword vectors and visualize the clusters in a two-dimensional space. This will allow us to visually inspect the clusters and ensure that they are reasonably well-separated.</li>
+</ul>
+
+<h3 id="4-category-prediction-for-new-websites">4. Category Prediction for New Websites</h3>
+
+<p>With the labeled dataset created in the clustering step, we will proceed to build a prediction model that can categorize new websites.</p>
+
+<h4 id="prediction-pipeline">Prediction Pipeline:</h4>
+
+<ul>
+  <li><strong>Scraping and Keyword Extraction</strong>: The process for new websites will start with scraping the website’s content and extracting keywords using the same steps as before.</li>
+  <li><strong>TF-IDF Transformation</strong>: The extracted keywords from new websites will be transformed into TF-IDF vectors using the same vectorizer that was used during the clustering step.</li>
+  <li><strong>Cluster Prediction</strong>: Using the pre-trained K-Means model, we will predict the cluster that the new website belongs to based on its keyword vector.</li>
+  <li><strong>Category Mapping</strong>: Finally, the predicted cluster will be mapped to the corresponding category name based on our manual labeling.</li>
+</ul>
+
+<p>This approach will allow us to categorize any new website by simply running it through the scraping, keyword extraction, and prediction pipeline, making the entire process automated and scalable.</p>]]></content><author><name></name></author><summary type="html"><![CDATA[Problem Statement]]></summary></entry><entry><title type="html">Page Title</title><link href="http://localhost:4000/2025/01/01/jan-1.html" rel="alternate" type="text/html" title="Page Title" /><published>2025-01-01T00:00:00+05:30</published><updated>2025-01-01T00:00:00+05:30</updated><id>http://localhost:4000/2025/01/01/jan-1</id><content type="html" xml:base="http://localhost:4000/2025/01/01/jan-1.html"><![CDATA[]]></content><author><name></name></author><summary type="html"><![CDATA[]]></summary></entry></feed>
