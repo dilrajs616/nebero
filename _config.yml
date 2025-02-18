@@ -41,7 +41,6 @@ exclude:
   - Gemfile
   - Gemfile.lock
   - README.md
-  - index.html
 
 # Build settings
 markdown: kramdown
