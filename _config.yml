@@ -29,6 +29,8 @@ navbar:
     url: "/nebero/2025/01/08/k-means"
   - title: "Faiss Clustering"
     url: "/nebero/2025/01/09/faiss"
+  - title: "Clustering GPU Acceleration"
+    url: "/nebero/2025/01/09/gpu-clustering"
   - title: "Hardware Requirements"
     url: "/nebero/2025/02/13/cpuvgpu"
   - title: "Translation Model"
