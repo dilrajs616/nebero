@@ -1,101 +1,118 @@
 ---
 
 layout: default  
-title: "Clustering and K-Means Algorithm"
+title: "Introduction to Clustering"
 
 ---
 
 ## Overview
 
-In this section, we will explain the concept of **clustering** and provide a detailed breakdown of the **K-Means algorithm**, which is the primary technique used for grouping websites in this project. Clustering is a key technique in unsupervised machine learning and is essential for organizing websites based on their content.
+**Clustering** is a fundamental task in machine learning and data mining, where the goal is to group a set of objects (websites, in our case) into clusters such that objects within the same cluster are more similar to each other than to those in other clusters. In the context of our **website categorization pipeline**, clustering helps us organize websites into distinct categories based on their textual content.
+
+Before diving into the specific clustering algorithms (like **K-Means**, **DBSCAN**, and **FAISS**), it is essential to understand the underlying principles, types of clustering, and the steps involved in performing clustering effectively.
 
 ---
 
-## What is Clustering?
+## Types of Clustering
 
-**Clustering** is an unsupervised machine learning technique used to group similar data points into clusters. The goal is to partition a dataset into groups where items in the same group (or cluster) are more similar to each other than to those in other groups. Clustering is commonly used in applications such as customer segmentation, image recognition, and, in our case, website categorization.
+There are several types of clustering approaches, each suited to different types of data and goals. The most common types of clustering are:
 
-### Key Characteristics of Clustering:
-- **Unsupervised Learning**: Clustering does not require labeled data. Instead, it discovers inherent patterns within the data.
-- **Similarity**: The algorithm groups data based on similarity measures (like Euclidean distance or cosine similarity) between the data points.
-- **Exploratory**: Clustering is used to explore and understand the underlying structure of the data.
+### 1. **Partitioning Clustering**
+Partitioning algorithms divide data into non-overlapping subsets (clusters), each of which is as distinct as possible from the others. The most widely used partitioning method is **K-Means**.
 
-In this project, the data points are websites, and the features used for clustering are the **TF-IDF vectors** (term frequency-inverse document frequency) of the keywords extracted from each website.
+- **K-Means**: A centroid-based clustering algorithm that groups data into a predefined number of clusters (K). It iteratively assigns data points to the nearest cluster center and recalculates the cluster centers until convergence.
+- **K-Medoids**: Similar to K-Means but instead of using the mean of the points in a cluster to define the cluster center, it uses an actual data point as the center.
 
----
+**When to use**: When you have a known number of clusters and data points that are well-separated in a geometric sense.
 
-## K-Means Clustering Algorithm
+### 2. **Density-Based Clustering**
+Density-based clustering algorithms group points that are closely packed together, marking points in low-density regions as outliers. Unlike partitioning methods, they do not require the number of clusters to be specified beforehand.
 
-**K-Means** is one of the most widely used clustering algorithms due to its simplicity and efficiency. The algorithm works by partitioning the data into `k` distinct clusters based on the similarity of the data points.
+- **DBSCAN (Density-Based Spatial Clustering of Applications with Noise)**: A popular density-based algorithm that groups together points that are within a specified distance (epsilon) from each other and have a minimum number of neighbors. Points that don't meet these criteria are labeled as noise (outliers).
+- **OPTICS**: Similar to DBSCAN, but instead of providing a single clustering result, it produces a reachability plot that helps find clusters of varying density.
 
-### Steps Involved in K-Means Algorithm:
+**When to use**: When you have clusters of arbitrary shape and varying density or when you need to identify and handle outliers.
 
-#### 1. **Initialization**
-   - **Choose the number of clusters (`k`)**: The first step is to decide the number of clusters that the algorithm should create. This is an important hyperparameter, and it can be determined based on the nature of the dataset or by experimenting with different values.
-   - **Randomly initialize `k` centroids**: The centroids are the initial "center points" of the clusters. They are chosen randomly from the data points or through advanced techniques like the K-Means++ algorithm, which helps in better initialization.
+### 3. **Hierarchical Clustering**
+Hierarchical clustering algorithms build a tree-like structure (dendrogram) that shows the arrangement of data points in clusters at different levels of granularity.
 
-#### 2. **Assign Data Points to Clusters**
-   - **Compute distance**: For each data point, the algorithm computes the distance to each of the `k` centroids. The most common distance metric used is **Euclidean distance**, but other distance measures like cosine similarity can also be used based on the nature of the data.
-   - **Assign points to nearest centroid**: Each data point is assigned to the cluster whose centroid is closest to it. This step ensures that data points in each cluster are similar to each other.
+- **Agglomerative (bottom-up)**: Starts with each point as its own cluster and merges the closest clusters iteratively until all points are in one cluster.
+- **Divisive (top-down)**: Starts with all points in one cluster and recursively splits them into smaller clusters.
 
-#### 3. **Update Centroids**
-   - **Recompute centroids**: After assigning all data points to the closest centroid, the centroid of each cluster is recalculated. The new centroid is the mean of all the data points assigned to that cluster. The formula for updating the centroid is:
-     \[
-     \mu_k = \frac{1}{N_k} \sum_{x_i \in C_k} x_i
-     \]
-     where:
-     - \( \mu_k \) is the new centroid of cluster \( k \),
-     - \( N_k \) is the number of points in cluster \( k \),
-     - \( C_k \) is the set of points assigned to cluster \( k \),
-     - \( x_i \) is each data point in the cluster.
-   
-#### 4. **Repeat Steps 2 and 3**
-   - The process of assigning data points to the nearest centroids and then updating the centroids continues iteratively. In each iteration, the centroids are updated, and data points may change clusters based on their proximity to the new centroids.
-   - This process repeats until one of the following stopping criteria is met:
-     - The centroids no longer change (convergence).
-     - A maximum number of iterations is reached.
-     - The algorithm reaches a predefined tolerance for centroid changes.
+**When to use**: When you need to observe the hierarchical relationships between clusters or when you want the flexibility to define the number of clusters at a later stage.
 
 ---
 
-## Example of K-Means Clustering
+## Key Considerations for Clustering
 
-Imagine we have a dataset of websites with their respective **TF-IDF vectors** representing keywords. The K-Means algorithm will group similar websites based on their keyword similarity, assigning them to a specific cluster (category). For instance:
+### 1. **Data Size and Scalability**
+Clustering algorithms can behave differently based on the size of the dataset. Here are the key points to keep in mind:
+- **Small Datasets**: For smaller datasets, most clustering algorithms like **K-Means**, **DBSCAN**, or **Hierarchical Clustering** can work well, as their computational complexity won’t be a major issue.
+- **Large Datasets**: When dealing with large datasets, algorithms like **K-Means** may become inefficient due to the **O(n*k)** time complexity (where **n** is the number of data points and **k** is the number of clusters). To improve performance, you might need to use more optimized methods like **Mini-batch K-Means** or **FAISS** (a library specifically optimized for high-dimensional data). **DBSCAN** can also struggle with large datasets, especially when the density of clusters varies.
 
-- **Cluster 1**: News websites, such as `bbc.com`, `nytimes.com`, `cnn.com`.
-- **Cluster 2**: E-commerce websites, such as `amazon.com`, `ebay.com`, `alibaba.com`.
-- **Cluster 3**: Educational websites, such as `edu.com`, `university.edu`, `learning.com`.
+### 2. **Cluster Shape and Structure**
+The shape of the clusters is an important factor in selecting the right algorithm:
+- **Spherical or well-separated clusters**: If the clusters are well-separated and roughly spherical (in Euclidean space), algorithms like **K-Means** are ideal. The algorithm assigns points to the nearest cluster center and assumes that the clusters have a similar spread.
+- **Arbitrary or non-convex clusters**: If the data forms clusters of arbitrary shape (for example, in text data), **DBSCAN** is better because it does not assume any specific cluster shape. It groups points that are dense in space and marks low-density regions as noise (outliers).
 
-The algorithm will use the keywords from the scraped content to compute the distance between websites and group them into these clusters.
+### 3. **Outliers**
+Some clustering algorithms are sensitive to outliers, while others are designed to detect them.
+- **Sensitive to Outliers**: Algorithms like **K-Means** can be heavily influenced by outliers because they assign them to clusters, impacting the cluster’s center. 
+- **Robust to Outliers**: **DBSCAN**, on the other hand, naturally handles outliers by identifying them as noise and excluding them from clusters.
+
+### 4. **Dimensionality of Data**
+The number of features in your data can greatly affect the performance of clustering algorithms.
+- **High-dimensional Data**: Clustering algorithms like **K-Means** and **DBSCAN** tend to perform poorly in high-dimensional spaces because the distance between points becomes less meaningful as the number of features increases. This is known as the **curse of dimensionality**.
+- **Dimensionality Reduction**: To address this, **dimensionality reduction techniques** like **PCA** (Principal Component Analysis) or **t-SNE** (t-Distributed Stochastic Neighbor Embedding) are used before clustering to reduce the number of dimensions while preserving the important structure of the data.
+
+### 5. **Distance Metric**
+Clustering algorithms rely on measuring distances between data points. Choosing the right distance metric is essential:
+- **Euclidean Distance**: This is the most commonly used distance metric, especially for numerical data. It calculates the straight-line distance between two points in a multi-dimensional space.
+- **Cosine Similarity**: For text-based data, **cosine similarity** is often used. It measures the cosine of the angle between two vectors, capturing how similar the direction of the vectors is, independent of their magnitude. This is particularly useful when comparing documents represented by TF-IDF vectors.
 
 ---
 
-## Evaluation of Clustering Quality
+## Preprocessing for Clustering
 
-Once the clustering is done, we need to evaluate how well the algorithm has performed. We can do this using several evaluation metrics, including:
+### 1. **Feature Extraction**
+Before clustering, you need to transform raw data into a numerical form that the algorithm can process. This step is known as **feature extraction**. For example:
+- **Numerical Features**: If the data consists of numerical values (e.g., website traffic, load time), ensure that these values are standardized or normalized.
+  - **Standardization**: This technique scales the data to have a mean of 0 and a standard deviation of 1, making sure that features with different units (e.g., website load time and number of visits) contribute equally to the clustering.
+  - **Normalization**: This technique scales the data to a fixed range, usually [0, 1]. It’s used when the data has differing scales or when distance-based metrics like Euclidean distance are used.
 
-### 1. **Silhouette Score**
-   - The **silhouette score** measures how similar each data point is to its own cluster compared to other clusters. A higher silhouette score indicates that the data points are well-clustered and well-separated. The score ranges from -1 (poor clustering) to +1 (excellent clustering).
+- **Textual Features**: If your data consists of text (like website content), you need to convert the text into numerical vectors:
+  - **TF-IDF (Term Frequency-Inverse Document Frequency)**: This method calculates the importance of words in a document relative to the entire corpus. Words that appear frequently in a document but rarely across all documents are assigned higher weights.
+  - **Word2Vec**: This method represents words as vectors in a high-dimensional space where similar words are closer together. It’s useful for capturing semantic meaning.
+  - **Sentence Embeddings**: A more advanced approach where entire sentences or paragraphs are represented as vectors, capturing the contextual meaning of the text.
 
-### 2. **Principal Component Analysis (PCA)**
-   - PCA is a dimensionality reduction technique that can be used to project high-dimensional data (such as TF-IDF vectors) into a 2D space. By plotting the data points in 2D, we can visually inspect how well the clusters are formed. Well-separated clusters will appear as distinct groups in the plot.
+### 2. **Stop-Words Removal**
+In text data, some words do not contribute significant meaning (e.g., "the," "is," "in"). These are called **stop-words**, and they should be removed before clustering because they can add noise to the data. **NLTK** and **spaCy** are popular libraries for stop-words removal.
 
----
+### 3. **Handling Categorical Data**
+In some cases, the data might contain categorical features (e.g., website type or category). These need to be encoded into numerical values before applying clustering algorithms:
+- **One-Hot Encoding**: This method creates a binary column for each category. For example, if the feature is website type with values like "education" and "commerce," each row will have a 1 or 0 indicating which category the website belongs to.
+- **Label Encoding**: In cases where the categorical values have an inherent order (like "low", "medium", "high"), label encoding assigns each category a unique integer.
 
-## Pros and Cons of K-Means
+### 4. **Dimensionality Reduction**
+High-dimensional data can cause problems for clustering algorithms due to the curse of dimensionality. Reducing the number of features can help improve the performance of the clustering algorithm.
+- **PCA (Principal Component Analysis)**: PCA is a linear dimensionality reduction technique that projects the data onto a set of orthogonal axes (principal components) while retaining as much variance as possible. It’s a common technique used before applying algorithms like **K-Means**.
+  - **How it works**: PCA finds the directions (principal components) in which the data varies the most and projects the data onto these components.
+  - **Use Case**: For example, if you're working with high-dimensional embeddings from text, applying PCA can help reduce the number of dimensions from hundreds or thousands to just a few key components, preserving the important structure of the data.
 
-### Pros:
-- **Simple and Efficient**: K-Means is easy to understand and implement, making it one of the most commonly used clustering algorithms.
-- **Scalable**: It works well on large datasets and is computationally efficient compared to other clustering methods like hierarchical clustering.
-- **Fast Convergence**: K-Means tends to converge quickly, especially when initialized properly.
+- **t-SNE (t-Distributed Stochastic Neighbor Embedding)**: t-SNE is a non-linear dimensionality reduction technique often used for visualizing high-dimensional data in 2D or 3D.
+  - **Use Case**: t-SNE is particularly useful when you want to visualize clusters after applying dimensionality reduction. However, it is computationally expensive and not recommended for very large datasets.
 
-### Cons:
-- **Choosing `k` is Challenging**: The number of clusters `k` needs to be defined beforehand, which can be difficult if the true number of clusters is unknown. Techniques like the **elbow method** can help in determining the optimal `k`.
-- **Sensitivity to Initial Centroids**: The algorithm can converge to a local minimum depending on the initial choice of centroids. K-Means++ helps mitigate this issue, but it remains a limitation.
-- **Not Suitable for Non-Convex Clusters**: K-Means assumes that clusters are spherical and equally sized. It may not perform well with complex cluster shapes.
+### 5. **Scaling the Data**
+Clustering algorithms that rely on distances (such as **K-Means**) are sensitive to the scale of features. If features are on different scales, algorithms may give more weight to features with larger values. Therefore, scaling is essential:
+- **Standardization**: As mentioned earlier, standardizing the data ensures that features with different units contribute equally to the clustering process.
+- **Normalization**: When you want to scale features to a specific range (e.g., [0, 1]), normalization is appropriate.
 
 ---
 
 ## Conclusion
 
-**K-Means clustering** is a powerful and widely-used technique for grouping websites based on their content, particularly when the data is high-dimensional, such as TF-IDF vectors. By applying this algorithm, we can efficiently categorize websites into meaningful groups that can later be manually labeled to create a labeled dataset for machine learning models. However, it is essential to choose the correct number of clusters (`k`) and handle initialization issues to ensure optimal performance.
+Clustering is a powerful tool for grouping similar data points, but it requires careful consideration of the dataset and proper preprocessing to ensure good results. Key steps include:
+- **Feature extraction**: Converting raw data into numerical form that the algorithm can understand.
+- **Dimensionality reduction**: Reducing the number of features to avoid the curse of dimensionality.
+- **Handling outliers and data size**: Choosing the right algorithm based on your dataset’s size and outlier handling needs.
+- **Distance metrics**: Selecting the appropriate metric to measure the similarity between data points.
