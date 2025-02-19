@@ -1,13 +1,9 @@
 ---
-
 layout: default  
 title: "Learnings from Web Scraping Process"
-
 ---
 
-## Overview
-
-In this section, I will outline the key learnings from our web scraping process, including how **Selenium** and **Playwright** work, their differences, and the pros and cons of using each. These learnings were gained through experimentation with different web scraping tools and understanding their advantages and limitations.
+In this section, I outline key learnings from using **Selenium** and **Playwright** for web scraping. These insights come from hands-on experience in understanding their differences, advantages, and limitations.
 
 ---
 
@@ -15,30 +11,34 @@ In this section, I will outline the key learnings from our web scraping process,
 
 ### How Selenium Works
 
-**Selenium** is an open-source framework for automating web browsers. It is commonly used for **web scraping** and **automated testing** of web applications. Selenium operates by controlling a real web browser (like Chrome, Firefox, or Edge) through a **WebDriver**, which acts as a bridge between Selenium scripts and the web browser. This allows for simulating user interactions such as clicks, scrolls, and form submissions, making it effective for scraping websites with dynamic content.
+**Selenium** automates real web browsers (Chrome, Firefox, Edge) via **WebDrivers**, enabling tasks like clicking, typing, and scrolling, which is useful for scraping dynamic web content.
 
-### Web Drivers
+Example of basic Selenium usage:
+```python
+from selenium import webdriver
 
-A **WebDriver** is essentially a software interface used by Selenium to communicate with the web browser. It enables the automation of browsers by sending commands to the browser and receiving responses. For example, when a Selenium script requests to open a page or click on an element, the WebDriver translates these commands into actions that the browser can perform.
+# Initialize driver and open a webpage
+driver = webdriver.Chrome()
+driver.get("https://example.com")
 
-#### How Selenium Works with Web Drivers:
-- **WebDriver Initialization**: First, the appropriate **driver** (e.g., ChromeDriver for Google Chrome or GeckoDriver for Firefox) is installed and configured.
-- **Browser Launch**: The Selenium WebDriver initiates the browser and loads the desired webpage.
-- **Interaction**: Selenium simulates interactions such as clicking buttons, typing text, and scrolling, by sending commands to the WebDriver.
-- **Data Extraction**: Selenium can then scrape the rendered content (including dynamically generated content) using functions like `getText()`, `getAttribute()`, etc.
+# Interact with page elements
+element = driver.find_element_by_id("example-id")
+element.click()
 
-#### Pros and Cons of Selenium:
-- **Pros**:
-  - Wide compatibility with most browsers.
-  - Can handle complex websites with dynamic content.
-  - Well-suited for automated testing as well as scraping.
-  - Strong community support and well-documented.
+# Extract data
+text = driver.find_element_by_tag_name("h1").text
+driver.quit()
+```
 
-- **Cons**:
-  - Slow compared to other tools, especially with many concurrent scraping tasks.
-  - Requires significant system resources (memory and CPU) for parallel browsing.
-  - Memory leaks and slower execution when running for long periods, especially on a low-resource machine.
-  - Requires a real browser to be installed, making setup and maintenance a bit more complex.
+#### Pros of Selenium:
+- Works with multiple browsers.
+- Ideal for scraping complex websites with dynamic content.
+- Well-documented with strong community support.
+
+#### Cons of Selenium:
+- Slower execution, especially with concurrent tasks.
+- High resource consumption (memory, CPU).
+- Prone to memory leaks with long-running tasks.
 
 ---
 
@@ -46,67 +46,49 @@ A **WebDriver** is essentially a software interface used by Selenium to communic
 
 ### How Playwright Works
 
-**Playwright** is another modern open-source framework for automating browsers, similar to Selenium. However, it is designed to be more efficient, especially for modern web applications and heavy scraping tasks. Playwright works by controlling Chromium, Firefox, and WebKit-based browsers (including Safari) and can handle **dynamic content** with better performance and stability compared to Selenium.
+**Playwright** is a more modern alternative, designed for faster execution and better handling of dynamic web content. Unlike Selenium, Playwright downloads browser binaries automatically, simplifying setup.
 
-Playwright does not require a real browser installation like Selenium. Instead, it downloads and uses browser binaries, making it lighter on resources and easier to set up.
+Example of basic Playwright usage:
+```python
+from playwright.sync_api import sync_playwright
 
-#### Key Features of Playwright:
-- **Cross-browser Support**: Playwright supports multiple browsers, including Chromium, Firefox, and WebKit.
-- **Faster Execution**: It is known for its fast execution times, handling concurrent scraping tasks with better performance than Selenium.
-- **Automatic Waiting**: Playwright can automatically wait for page elements to load, which makes scraping dynamic sites smoother and less error-prone.
-- **Headless Mode**: Like Selenium, Playwright can run in headless mode (without a graphical interface), making it ideal for background scraping tasks.
+with sync_playwright() as p:
+    # Launch browser and open a webpage
+    browser = p.chromium.launch()
+    page = browser.new_page()
+    page.goto("https://example.com")
+    
+    # Interact with page elements
+    page.click("text=Example")
+    
+    # Extract data
+    text = page.inner_text("h1")
+    browser.close()
+```
 
-#### Pros and Cons of Playwright:
-- **Pros**:
-  - Faster than Selenium for many tasks due to improved architecture.
-  - More efficient memory management, especially for long-running tasks.
-  - Handles JavaScript-heavy websites better due to its better support for modern web technologies.
-  - Simpler to set up, as it automatically downloads browser binaries.
-  
-- **Cons**:
-  - Smaller community compared to Selenium, though it’s growing rapidly.
-  - Limited documentation and fewer tutorials compared to Selenium.
-  - Newer, so it might have some bugs or compatibility issues with older web technologies.
+#### Pros of Playwright:
+- Faster execution and lower resource usage.
+- Better memory management for long-running tasks.
+- Automatic handling of dynamic content (e.g., waits for elements to load).
 
----
-
-## Comparison: Selenium vs. Playwright
-
-### How They Differ:
-
-1. **Browser Control**:
-   - **Selenium**: Uses WebDriver to control browsers, which require separate installations (e.g., ChromeDriver for Chrome).
-   - **Playwright**: Uses browser binaries directly and does not require separate driver installations.
-
-2. **Performance**:
-   - **Selenium**: Tends to be slower, especially when scraping a large number of websites or handling dynamic content.
-   - **Playwright**: More efficient and faster, especially for large-scale web scraping tasks with dynamic content.
-
-3. **Memory and CPU Usage**:
-   - **Selenium**: Tends to consume more memory and CPU, especially when running multiple concurrent browser instances.
-   - **Playwright**: More lightweight and optimized for lower resource consumption.
-
-4. **Ease of Use**:
-   - **Selenium**: Mature and well-established, with lots of resources available for learning and troubleshooting.
-   - **Playwright**: Newer, but easier to set up and provides better tools for handling modern web pages.
-
-5. **Support for Dynamic Content**:
-   - **Selenium**: Works well with JavaScript-heavy websites, but may require more manual handling of dynamic content.
-   - **Playwright**: Provides automatic waiting for dynamic elements to load, making it more reliable for JavaScript-heavy sites.
+#### Cons of Playwright:
+- Smaller community and fewer tutorials.
+- May have bugs with older web technologies.
 
 ---
 
-## Which One is Better?
+## Selenium vs. Playwright Comparison
 
-- **For Performance**: **Playwright** is a clear winner when it comes to speed, resource efficiency, and handling dynamic content. If you are working with a large number of websites or need to scrape data at a fast rate, Playwright would be the better choice.
-- **For Compatibility and Legacy Support**: **Selenium** is more mature and widely compatible with a larger range of browsers and platforms. If you need to scrape websites that may not work well with Playwright, Selenium is a safe bet.
-- **For Ease of Setup**: **Playwright** offers easier setup, especially when compared to Selenium, which requires separate browser drivers and more configuration.
+1. **Performance**:
+   - Selenium: Slower, especially for dynamic content and many websites.
+   - Playwright: Faster and more resource-efficient.
+
+2. **Ease of Use**:
+   - Selenium: Well-documented with a large community.
+   - Playwright: Easier setup, no need for separate browser drivers.
+
+3. **Dynamic Content Handling**:
+   - Selenium: Manual handling may be needed for JavaScript-heavy sites.
+   - Playwright: Automatically waits for dynamic elements.
 
 ---
-
-### Conclusion
-
-Both **Selenium** and **Playwright** are powerful tools for web scraping, each with its own strengths. Playwright shines in terms of speed, efficiency, and modern web compatibility, making it ideal for large-scale scraping tasks. On the other hand, Selenium remains a reliable tool for broader browser compatibility and legacy support.
-
-For this project, after considering the challenges with memory, performance, and scraping dynamically generated content, **Playwright** was chosen as the tool of choice due to its better handling of modern web technologies and efficient resource usage.
-

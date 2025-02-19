@@ -3,60 +3,88 @@ layout: default
 title: "Step 0: Data Collection"
 ---
 
-Before starting the scraping process, it was essential to gather a comprehensive list of websites to be categorized. The data collection process involved the following steps:
+In this step, I focused on collecting a comprehensive list of websites for the categorization project. The data collection process involved the following:
 
 ## 1. Extracting URL Logs from Internal Sources
 
-As the firewall was already implemented in multiple colleges and companies, we were able to access URL logs from two colleges: **GNDEC Ludhiana** and **Thapar University**. These logs contained URLs visited by users over the last 3 years. The objective was to extract domain names from these logs for further processing.
+We leveraged URL logs from two colleges, **GNDEC Ludhiana** and **Thapar University**, to extract domain names visited over the past 3 years. 
 
-### Key Steps:
-- **Log Extraction**: We obtained the URL logs from the colleges’ firewall or network monitoring system. These logs contained data about every website visited by users.
-- **Data Range**: The data provided logs of URLs accessed over the last 3 years, which gave us a historical snapshot of website traffic.
+### Developer Actions:
+- **Log Extraction**: I extracted URL logs from the firewall/network monitoring system of both colleges.
+- **Data Parsing**: Using Python, I parsed these logs to isolate the domain names from the URLs.
   
-## 2. Extracting Domain Names
+Example:
+```python
+from urllib.parse import urlparse
 
-After extracting the logs, the next task was to extract only the domain names from the URLs. This was crucial, as the logs also contained full URLs, but we only needed the domain portion for further processing.
+url = 'https://sub.example.com/page'
+domain = urlparse(url).netloc  # Outputs: 'sub.example.com'
+```
 
-### Key Steps:
-- **Parsing URLs**: Using Python’s `urlparse` module or similar tools, we parsed the URLs to extract the domain names.
-- **Handling Subdomains**: We removed subdomains from the extracted domain names to ensure we were only left with the primary domain. For example, “sub.example.com” would be reduced to “example.com”.
+## 2. Domain Name Extraction
+
+The logs contained full URLs, but only domain names were necessary for the project. Subdomains were removed to ensure focus on primary domains.
+
+### Developer Actions:
+- **Parsing and Cleaning**: I used Python's `urlparse` module to extract domain names and cleaned the list to remove subdomains.
   
-## 3. Filtering and Cleaning the Data
+Example:
+```python
+domain = urlparse(url).netloc.split('.')[-2:]  # Reduces 'sub.example.com' to 'example.com'
+```
 
-Once we had the domain names, we performed a series of cleaning steps to ensure that only relevant domains were included.
+## 3. Filtering and Cleaning Data
 
-### Key Steps:
-- **Removing Useless Domains**: We filtered out domains that were irrelevant to the categorization task, such as domains for hosting services (e.g., “example-hosting.com”) and CDN websites (e.g., “cdn.example.com”).
-- **Duplicate Removal**: We removed any duplicate domains to avoid having redundant entries in our final list.
-- **Final Cleaned Dataset**: After cleaning, we were left with a list of several hundred thousand unique domain names.
+The raw list of domains was further filtered to remove irrelevant entries such as hosting services and CDN domains. Duplicate domains were also eliminated.
 
-## 4. Dealing with Expired Domains
-
-One of the challenges we encountered was that many of the domain names in the extracted list were no longer reachable, as they had expired. These expired domains could not be scraped, so we had to take steps to gather active domains for our project.
-
-### Key Steps:
-- **Domain Availability Check**: We implemented a script to check the availability of domains in the list. This helped identify and remove expired or unreachable domains.
-- **Filtering Unreachable Domains**: Domains that were no longer available or had expired were removed from the list, leaving only the active ones.
-
-## 5. Downloading the Top 10 Million Domains
-
-To complement the internal data from the URL logs, we downloaded a list of the top 10 million domains to increase the breadth of our dataset. This list was sourced from [Domcop’s Top 10 Million Websites](https://www.domcop.com/top-10-million-websites).
-
-### Key Steps:
-- **Downloading from Domcop**: We obtained a ready-made list of the top 10 million domains. This list contained domains that are among the most popular and widely visited on the web, making it a valuable source for website categorization.
+### Developer Actions:
+- **Filtering**: I implemented custom filters to exclude domains related to hosting or CDNs.
+- **Duplicate Removal**: A simple Python script removed duplicates from the dataset.
   
-## 6. Challenges with Alternative Data Sources
+Example:
+```python
+unique_domains = list(set(domain_list))
+```
 
-While exploring additional sources, we also attempted to download domain lists from Kaggle and GitHub. However, these sources presented some challenges.
+## 4. Handling Expired Domains
 
-### Key Issues:
-- **Missing Protocol**: The lists from Kaggle and GitHub only contained domain names (e.g., "example.com") without the "http" or "https" prefix. For web scraping, it is essential to have the full URLs, including the protocol (i.e., "https://example.com"). Without this information, the domains were not directly usable for scraping.
-- **Data Inconsistencies**: Some of the domain lists from Kaggle and GitHub lacked necessary details or had inconsistent formatting, which made them less practical compared to the Domcop list.
+A significant portion of domains from the logs were expired or unreachable.
+
+### Developer Actions:
+- **Availability Check**: I developed a script to check the reachability of each domain.
+- **Filtering**: Expired domains were automatically removed from the list.
+  
+Example:
+```python
+import requests
+
+def check_domain_availability(domain):
+    try:
+        response = requests.get(f"http://{domain}", timeout=5)
+        return response.status_code == 200
+    except requests.ConnectionError:
+        return False
+```
+
+## 5. Augmenting Data with the Top 10 Million Domains
+
+To enhance the dataset, I downloaded a list of the top 10 million domains from Domcop.
+
+### Developer Actions:
+- **Data Integration**: I merged the cleaned internal domain list with the top 10 million domains from Domcop, ensuring proper formatting for scraping.
+
+## 6. Issues with Alternative Data Sources
+
+While considering other sources like Kaggle and GitHub, we encountered formatting issues, such as missing protocols and data inconsistencies.
+
+### Developer Actions:
+- **Formatting Issues**: I discarded inconsistent or incomplete lists from Kaggle and GitHub and focused on reliable sources like Domcop.
 
 ## 7. Final Domain List
 
-After performing the data collection and cleaning steps, we were left with a refined list of domains, including the top 10 million domains from Domcop and the active domains from the internal URL logs. This list served as the foundation for the next stages of our website categorization project.
+After these processes, I had a refined and structured list of domains ready for scraping and categorization.
 
-### Key Steps:
-- **Combining Sources**: We combined the internal domain list with the top 10 million domains from Domcop to create a comprehensive list.
-- **Pre-processing**: We ensured that each domain in the final list had the proper format (including "http" or "https") to ensure smooth scraping and data collection.
+### Developer Actions:
+- **Combining and Preprocessing**: I combined multiple sources and ensured the domains had proper "http" or "https" prefixes for smooth scraping.
+  
+---
