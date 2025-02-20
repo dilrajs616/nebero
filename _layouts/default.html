@@ -52,10 +52,12 @@
       top: 0;
       left: 0;
       bottom: 0;
-      width: 17%;
+      width: 20%; /* Default width for larger screens */
+      max-width: 300px; /* Ensure the sidebar doesn't get too wide */
+      min-width: 200px; /* Minimum width */
       box-shadow: 4px 0px 6px rgba(0, 0, 0, 0.1);
       z-index: 1000;
-      transition: transform 0.3s ease;
+      transition: transform 0.3s ease, width 0.3s ease;
     }
     .sidebar .nav-link {
       color: #fff;
@@ -91,16 +93,25 @@
       color: #007bff;
       font-weight: bold;
     }
-    /* Responsive sidebar hiding for small screens */
+    /* Media query for smaller screens */
+    @media (max-width: 1024px) {
+      .sidebar {
+        width: 25%; /* Increase width on medium screens */
+        max-width: 250px;
+      }
+    }
+
     @media (max-width: 768px) {
       .sidebar {
-        transform: translateX(-300px);
+        width: 30%; /* Adjust width on smaller tablets */
+        max-width: 220px;
       }
-      .sidebar.show {
-        transform: translateX(0);
-      }
-      .main-content {
-        margin-left: 0;
+    }
+
+    @media (max-width: 480px) {
+      .sidebar {
+        width: 40%; /* For mobile screens */
+        max-width: 200px;
       }
     }
   </style>
