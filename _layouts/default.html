@@ -93,6 +93,7 @@
       color: #007bff;
       font-weight: bold;
     }
+    /* Responsive sidebar hiding for small screens */
     /* Media query for smaller screens */
     @media (max-width: 1024px) {
       .sidebar {
@@ -110,8 +111,13 @@
 
     @media (max-width: 480px) {
       .sidebar {
-        width: 40%; /* For mobile screens */
-        max-width: 200px;
+        transform: translateX(-300px);
+      }
+      .sidebar.show {
+        transform: translateX(0);
+      }
+      .main-content {
+        margin-left: 0;
       }
     }
   </style>
