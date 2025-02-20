@@ -20,3 +20,6 @@ _site/
 # Ignore system files
 .DS_Store
 Thumbs.db
+
+.jekyll-cache
+gitpush.sh
