@@ -1,48 +1,50 @@
-theme: minima
+title: "Nebero Documentation"
+author: "Inderpreet Singh"
+description: "A Jekyll blog to document my work."
+baseurl: "/nebero" 
+url: "https://inder-singh001.github.io"  # Change this if hosting on GitHub Pages
+paginate: 5
 
-# Site settings
-title: Nebero Documentation
-description: A journey through the development of a website categorization ML model.
-baseurl: "/nebero" # the subpath of your site
-url: "https://dilrajs616.github.io" # the base hostname & protocol for your site
-theme: jekyll-theme-cayman
+# Build settings
+theme: null
+
 
 # Navigation links
 navbar:
   - title: "Home"
-    url: "/nebero"
+    url: "/"
   - title: "Introduction"
-    url: "/nebero/2025/01/01/introduction"
+    url: "/2025/01/01/introduction"
   - title: "Data Collection"
-    url: "/nebero/2025/01/02/data-collection"
+    url: "/2025/01/02/data-collection"
   - title: "Scraping"
-    url: "/nebero/2025/01/03/scraping"
+    url: "/2025/01/03/scraping"
   - title: "Problems in Web Scraping"
-    url: "/nebero/2025/01/04/problems"
+    url: "/2025/01/04/problems"
   - title: "Scraping Learning"
-    url: "/nebero/2025/01/05/scraping-learning"
+    url: "/2025/01/05/scraping-learning"
   - title: "Keyword Extraction"
-    url: "/nebero/2025/01/06/keywords"
+    url: "/2025/01/06/keywords"
   - title: "Clustering Explanation"
-    url: "/nebero/2025/01/07/clustering-explain"
+    url: "/2025/01/07/clustering-explain"
   - title: "K-Means Clustering"
-    url: "/nebero/2025/01/08/k-means"
+    url: "/2025/01/08/k-means"
   - title: "Faiss Clustering"
-    url: "/nebero/2025/01/09/faiss"
+    url: "/2025/01/09/faiss"
   - title: "Clustering GPU Acceleration"
-    url: "/nebero/2025/01/10/gpu-clustering"
+    url: "/2025/01/10/gpu-clustering"
   - title: "Using LLM Models"
-    url: "/nebero/2025/01/31/llm-models"
+    url: "/2025/01/31/llm-models"
   - title: "Hardware Requirements"
-    url: "/nebero/2025/02/01/requirements"
+    url: "/2025/02/01/requirements"
   - title: "Requirements Evaluation"
-    url: "/nebero/2025/02/13/cpuvgpu"
+    url: "/2025/02/13/cpuvgpu"
   - title: "Translation Model"
-    url: "/nebero/2025/02/14/translation"
+    url: "/2025/02/14/translation"
   - title: "RTX 4090"
-    url: "/nebero/2025/02/16/rtx-4090"
+    url: "/2025/02/16/rtx-4090"
   - title: "Feb 17"
-    url: "/nebero/2025/02/17/feb-17"
+    url: "/2025/02/17/feb-17"
 
 # Exclude any files from Jekyll's processing
 exclude:
