@@ -45,6 +45,8 @@ navbar:
     url: "/2025/02/16/rtx-4090"
   - title: "Feb 17"
     url: "/2025/02/17/feb-17"
+  - title: "Week 1"
+    url: "/2025/02/17/week1"
 
 # Exclude any files from Jekyll's processing
 exclude:
