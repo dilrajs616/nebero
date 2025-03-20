@@ -23,3 +23,5 @@ Thumbs.db
 
 .jekyll-cache
 gitpush.sh
+
+_site
